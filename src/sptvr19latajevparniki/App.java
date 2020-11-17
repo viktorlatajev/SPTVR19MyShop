@@ -5,14 +5,30 @@
  */
 package sptvr19latajevparniki;
 
+import entity.Consumers;
+import entity.Parniki;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import tools.managers.ConsumerManager;
+import tools.managers.ParnikManager;
+import tools.savers.Saver;
 
 /**
  *
  * @author user
  */
 class App {
-
+    private List<Parniki> listParniki = new ArrayList<>();
+    private ParnikManager parnikManager = new ParnikManager();
+    private List<Consumers> listConsumers = new ArrayList<>();
+    private ConsumerManager consumerManager = new ConsumerManager();
+    
+    public App(){
+        Saver saver = new Saver();
+        this.listParniki = saver.loadFromFile("saveParniki");
+        this.listConsumers = saver.loadFromFile("saveConsumers");
+    }
     public void run() {
         System.out.println("----- Парники для садового участка -----");
         boolean repeat = true;
@@ -33,16 +49,18 @@ class App {
                     System.out.println("Вы вышли из магазина!");
                     break;
                 case "1":
-                    
+                    Parniki parnik = parnikManager.createParnik();
+                    parnikManager.addParnikToArray(listParniki, parnik);
                     break;
                 case "2":
-                    
+                    parnikManager.printParnikArray(listParniki);
                     break;
                 case "3":
-                    
+                    Consumers consumer = consumerManager.createConsumer();
+                    consumerManager.addConsumerToArray(listConsumers, consumer);
                     break;
                 case "4":
-                    
+                    consumerManager.printConsumerArray(listConsumers);
                     break;
                 case "5":
                     
