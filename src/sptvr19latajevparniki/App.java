@@ -63,7 +63,7 @@ class App {
                     consumerManager.printConsumerArray(listConsumers);
                     break;
                 case "5":
-                    
+                    consumerManager.buyProduct(listConsumers, listParniki, parnikManager);
                     break;
                 default:
                     System.out.println("Нет такой задачи!");

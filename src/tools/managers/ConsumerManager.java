@@ -52,5 +52,39 @@ public class ConsumerManager {
         }
     }
 
+    public void buyProduct(List<Consumers> listConsumers, List<Parniki> listParniki, ParnikManager parnikManager) {
+        System.out.println("---Купить товар---");
+        if(listParniki.size()!=0){
+            printConsumerArray(listConsumers);
+            System.out.println("Выберите номер покупателя: ");
+            int consumerNum = scanner.nextInt()-1;
+            parnikManager.printParnikArray(listParniki);
+            System.out.println("Выберите номер товара: ");
+            int productNum = scanner.nextInt()-1;
+            if(listConsumers.get(consumerNum).getMoney()>=listParniki.get(productNum).getPrice()) {
+                System.out.printf("%s "+"%s купил"+" %s  за "+listParniki.get(productNum).getPrice()+"$ %n"
+                        , listConsumers.get(consumerNum).getFirstName()
+                        , listConsumers.get(consumerNum).getLastName()
+                        , listParniki.get(productNum).getName()
 
+
+                        );
+                listConsumers.get(consumerNum).setMoney(listConsumers.get(consumerNum).getMoney()-listParniki.get(productNum).getPrice());
+                Saver saver = new Saver();
+                saver.saveToFile(listConsumers, "listConsumers");
+                listParniki.get(productNum).setAmount(listParniki.get(productNum).getAmount()-1);
+                if(listParniki.get(productNum).getAmount()==0){
+                    listParniki.remove(productNum);
+                }
+                saver.saveToFile(listParniki, "listProducts");
+
+            }else {
+                System.out.println("Не достаточно средств");
+            }
+        }else {
+            System.out.println("Нет товара");
+        }    
+    }
+
+    
 }
